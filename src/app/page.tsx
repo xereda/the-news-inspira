@@ -1,95 +1,80 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import cn from 'classnames';
+import Image from 'next/image';
+import { Poppins, Montserrat } from 'next/font/google';
+import { FaRegCopy } from 'react-icons/fa6';
+import { HiSparkles } from 'react-icons/hi2';
+import { FaCheckSquare } from 'react-icons/fa';
+import styles from './page.module.css';
+import { useState } from 'react';
+
+const poppins = Poppins({
+  weight: ['400'],
+  subsets: ['latin'],
+});
+
+const montserrat = Montserrat({
+  weight: ['600'],
+  subsets: ['latin'],
+});
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [message, setMessage] = useState(
+    "o estagiário não para! 🤣 depois de invadir sua inbox com mensagens motivacionais, ele resolveu criar uma fábrica de 'bom dia'! 🏭 essa ferramenta é tipo um 'gerador de good vibes' - naquele padrão the news - pra você usar e abusar. quer um 'bom dia' extra? quer mandar um recado motivacional pros amigos? o estagiário resolveu pra você! use sem moderação (e depois conta pra gente o que achou 😉).",
+  );
+  const [isCopied, setIsCopied] = useState(false);
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  const handleCopy = () => {
+    navigator.clipboard.writeText(message).then(() => {
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    });
+  };
+
+  return (
+    <section className={styles.section}>
+      <Image
+        src="/logo.avif"
+        alt="logo the news"
+        width={80}
+        height={80}
+        className={styles.logo}
+      />
+      <h1 className={styles.h1}>the news inspira!</h1>
+      <h2 className={cn(poppins.className, styles.h2)}>
+        comece melhor o seu dia
+      </h2>
+      <div className={cn(poppins.className, styles.message)}>{message}</div>
+      <button
+        className={cn([
+          montserrat.className,
+          styles.button,
+          styles.button__primary,
+        ])}
+      >
+        <HiSparkles size={20} />
+        gerar mensagem com IA
+      </button>
+      <button
+        onClick={handleCopy}
+        className={cn(montserrat.className, styles.button, {
+          [styles.button__secondary]: !isCopied,
+          [styles['button__secondary--copied']]: isCopied,
+        })}
+      >
+        {isCopied ? (
+          <>
+            <FaCheckSquare size={20} />
+            copiado!
+          </>
+        ) : (
+          <>
+            <FaRegCopy size={20} />
+            copiar mensagem
+          </>
+        )}
+      </button>
+    </section>
   );
 }
