@@ -143,13 +143,9 @@
 
   .buttons__wrapper {
     display: flex;
-    flex-direction: row;
-    justify-content: right;
-    gap: 2rem;
-  }
-
-  .button {
-    width: 26rem;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
   }
 
   .footer {
@@ -158,5 +154,18 @@
     position: fixed;
     bottom: 2rem;
     right: 3rem;
+  }
+}
+
+@media (min-width: 896px) {
+  .buttons__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    gap: 2rem;
+  }
+
+  .button {
+    width: 26rem;
   }
 }
