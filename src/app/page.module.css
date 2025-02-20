@@ -46,13 +46,28 @@
   margin-bottom: 1rem;
   padding: 1.3rem;
   font-size: 1.3rem;
+  background-color: #f5f5f5;
+  overflow-y: scroll; /* Alterado para scroll permanente */
+  -webkit-overflow-scrolling: touch; /* Força scroll suave no iOS */
+
+  /* Estilização para todos os dispositivos */
   scrollbar-width: thin;
   scrollbar-color: #ffcf00 #f5f5f5;
-  background-color: #f5f5f5;
-  -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
-  overflow-y: auto; /* Better compatibility for iOS */
-  -webkit-appearance: none; /* Remove default iOS styling */
-  appearance: none; /* Standard property for compatibility */
+
+  /* Webkit para Chrome/Edge/iOS */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f5f5f5;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #ffcf00;
+    border-radius: 4px;
+  }
+
+  /* Ajuste para melhor visualização no iOS */
+  padding-right: 5px; /* Compensa a largura da scrollbar */
 }
 
 .buttons__wrapper {
