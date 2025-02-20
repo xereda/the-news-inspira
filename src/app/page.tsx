@@ -66,7 +66,7 @@ export default function Home() {
     <section className={styles.section}>
       <Image
         priority
-        src="/logo.avif"
+        src="/logo.webp"
         alt="logo the news"
         width={80}
         height={80}
