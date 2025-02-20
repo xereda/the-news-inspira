@@ -9,6 +9,10 @@
 .logo {
   border-radius: 0.25rem;
   box-shadow: 5px 5px 10px -3px rgba(0, 0, 0, 0.24);
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  display: block;
 }
 
 .h1 {
