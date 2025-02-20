@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   padding: 0 10%;
-  margin-top: 5rem;
+  margin-top: 3.5rem;
 }
 
 .logo {
@@ -44,7 +44,7 @@
   width: 100%;
   height: 15rem;
   margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   padding: 1.3rem;
   font-size: 1.3rem;
   scrollbar-width: thin;
@@ -126,6 +126,7 @@
 @media (min-width: 768px) {
   .section {
     padding: 0 20%;
+    margin-top: 5rem;
   }
 
   .h1 {
