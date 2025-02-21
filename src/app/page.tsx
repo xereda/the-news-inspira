@@ -8,7 +8,7 @@ import { FaRegCopy } from 'react-icons/fa6';
 import { HiSparkles } from 'react-icons/hi2';
 import { FaCheckSquare } from 'react-icons/fa';
 import styles from './page.module.css';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 const DEFAULT_MESSAGE =
   "o estagiário não para! 🤣 depois de invadir sua inbox com mensagens motivacionais, ele resolveu criar uma fábrica de 'bom dia'! 🏭 essa ferramenta é tipo um 'gerador de good vibes' - naquele padrão the news - pra você usar e abusar. quer um 'bom dia' extra? quer mandar um recado motivacional pros amigos? o estagiário resolveu pra você! use sem moderação (e depois conta pra gente o que achou 😉).";
@@ -27,6 +27,13 @@ export default function Home() {
   const [message, setMessage] = useState('');
   const [isCopied, setIsCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [csrfToken, setCsrfToken] = useState('');
+
+  useEffect(() => {
+    fetch('/api/csrf-token')
+      .then((res) => res.json())
+      .then((data) => setCsrfToken(data.token));
+  }, []);
 
   const handleCopy = () => {
     message &&
@@ -46,10 +53,15 @@ export default function Home() {
 
   const handleGenerateMessage = () => {
     setIsLoading(true);
-
     setMessage('gerando mensagem... 🤖');
 
-    fetch('/api/generate-message', { method: 'POST' })
+    fetch('/api/generate-message', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         setMessage(data.message);

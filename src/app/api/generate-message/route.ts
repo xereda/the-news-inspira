@@ -1,6 +1,7 @@
 // src/app/api/generate-message/route.ts
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
 // Replace with your actual API key
 const apiKey = process.env.GEMINI_API_KEY;
@@ -116,6 +117,18 @@ bom dia. você já parou pra pensar como uma companhia muda tudo? em vez de segu
 
 export async function POST(req: Request) {
   try {
+    // Validar CSRF Token
+    const csrfToken = req.headers.get('X-CSRF-Token');
+    const cookieStore = await cookies();
+    const cookieToken = cookieStore.get('csrf-token')?.value;
+
+    if (!csrfToken || csrfToken !== cookieToken) {
+      return NextResponse.json(
+        { error: 'Token CSRF inválido' },
+        { status: 403 },
+      );
+    }
+
     const chatSession = model.startChat({
       generationConfig,
       history: chatHistory,
